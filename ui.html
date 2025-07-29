@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UX톤 적용하기</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #ffffff;
+            color: #1a1a1a;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .container {
+            padding: 16px;
+            max-width: 100%;
+        }
+
+        .header {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #374151;
+        }
+
+        .original-text {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 13px;
+            color: #374151;
+            margin-bottom: 16px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+                 .tone-profile {
+             display: grid;
+             grid-template-columns: 1fr 1fr 1fr;
+             gap: 12px;
+             margin-bottom: 16px;
+         }
+
+        .tone-item {
+            background: #f8fafc;
+            border-radius: 6px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .tone-item-label {
+            font-size: 11px;
+            color: #6b7280;
+            margin-bottom: 4px;
+        }
+
+        .tone-item-value {
+            font-size: 13px;
+            font-weight: 500;
+            color: #1f2937;
+        }
+
+        .changes-section {
+            margin-bottom: 20px;
+        }
+
+        .change-item {
+            background: #fefefe;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .change-item:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.1);
+        }
+
+        .change-item.selected {
+            border-color: #3b82f6;
+            background: #eff6ff;
+        }
+
+        .change-content {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .change-checkbox {
+            width: 16px;
+            height: 16px;
+            accent-color: #3b82f6;
+        }
+
+        .change-text {
+            flex: 1;
+            font-size: 13px;
+        }
+
+        .change-original {
+            color: #dc2626;
+            background: #fef2f2;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .change-arrow {
+            color: #6b7280;
+            margin: 0 4px;
+        }
+
+        .change-suggested {
+            color: #059669;
+            background: #f0fdf4;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .change-rule {
+            font-size: 11px;
+            color: #6b7280;
+            margin-top: 4px;
+            margin-left: 24px;
+        }
+
+        .button {
+            width: 100%;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            margin-bottom: 8px;
+        }
+
+        .button:hover {
+            background: #2563eb;
+        }
+
+        .button:disabled {
+            background: #d1d5db;
+            cursor: not-allowed;
+        }
+
+        .button-secondary {
+            background: #f3f4f6;
+            color: #374151;
+            border: 1px solid #d1d5db;
+        }
+
+        .button-secondary:hover {
+            background: #e5e7eb;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6b7280;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .empty-state-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #374151;
+        }
+
+        .empty-state-desc {
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .alert {
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            font-size: 13px;
+        }
+
+        .alert-error {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #dc2626;
+        }
+
+        .alert-success {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #059669;
+        }
+
+        .keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .keyword-tag {
+            background: #e0e7ff;
+            color: #3730a3;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #6b7280;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #e5e7eb;
+            border-top: 2px solid #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 8px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">UX톤 적용하기</h1>
+            <p class="subtitle">한국어 텍스트를 친근한 UX Writing 톤으로 변환합니다</p>
+        </div>
+
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <div>분석 중...</div>
+        </div>
+
+        <div id="alert-container"></div>
+
+        <div id="empty-state" class="empty-state">
+            <div class="empty-state-icon">📝</div>
+            <div class="empty-state-title">텍스트를 선택해주세요</div>
+            <div class="empty-state-desc">
+                피그마에서 텍스트 노드를 선택한 후<br>
+                "분석하기" 버튼을 눌러주세요
+            </div>
+            <button class="button" onclick="analyzeSelection()" style="max-width: 200px; margin: 20px auto 0;">
+                분석하기
+            </button>
+        </div>
+
+        <div id="result-container" class="hidden">
+            <div class="card">
+                <div class="card-header">📄 원본 텍스트</div>
+                <div id="original-text" class="original-text"></div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">🎯 톤 프로파일</div>
+                <div class="tone-profile">
+                    <div class="tone-item">
+                        <div class="tone-item-label">현재 톤</div>
+                        <div id="current-tone" class="tone-item-value">-</div>
+                    </div>
+                    <div class="tone-item">
+                        <div class="tone-item-label">문장 길이</div>
+                        <div id="text-length" class="tone-item-value">-</div>
+                    </div>
+                    <div class="tone-item">
+                        <div class="tone-item-label">문장 유형</div>
+                        <div id="sentence-type" class="tone-item-value">-</div>
+                    </div>
+                    <div class="tone-item">
+                        <div class="tone-item-label">감정 톤</div>
+                        <div id="emotion-tone" class="tone-item-value">-</div>
+                    </div>
+                    <div class="tone-item">
+                        <div class="tone-item-label">감정 강도</div>
+                        <div id="emotion-score" class="tone-item-value">-</div>
+                    </div>
+                    <div class="tone-item">
+                        <div class="tone-item-label">변환 적용률</div>
+                        <div id="conversion-rate" class="tone-item-value">-</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="tone-item-label">주요 키워드</div>
+                    <div id="keywords" class="keywords"></div>
+                </div>
+            </div>
+
+            <div id="changes-card" class="card">
+                <div class="card-header">✨ 권장 변경사항</div>
+                <div id="changes-container" class="changes-section"></div>
+                <div id="no-changes" class="hidden" style="text-align: center; color: #6b7280; padding: 20px;">
+                    권장할 변경사항이 없습니다.<br>
+                    이미 친근한 톤으로 작성되어 있네요! 👍
+                </div>
+                <div id="changes-actions" class="hidden">
+                    <button class="button" onclick="applySelectedChanges()">
+                        선택한 변경사항 적용하기
+                    </button>
+                    <button class="button button-secondary" onclick="applyAllChanges()">
+                        모든 변경사항 적용하기
+                    </button>
+                </div>
+            </div>
+
+            <button class="button button-secondary" onclick="analyzeSelection()">
+                다시 분석하기
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let currentNodeId = null;
+        let currentChanges = [];
+
+        // 피그마에서 메시지 받기
+        window.onmessage = (event) => {
+            const message = event.data.pluginMessage;
+            
+            if (message.type === 'analysis-result') {
+                showAnalysisResult(message.data);
+            } else if (message.type === 'error') {
+                showAlert(message.message, 'error');
+            } else if (message.type === 'success') {
+                showAlert(message.message, 'success');
+            }
+        };
+
+        function showAlert(message, type) {
+            const container = document.getElementById('alert-container');
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.textContent = message;
+            container.innerHTML = '';
+            container.appendChild(alert);
+
+            // 3초 후 자동 제거
+            setTimeout(() => {
+                if (alert.parentNode) {
+                    alert.parentNode.removeChild(alert);
+                }
+            }, 3000);
+        }
+
+        function analyzeSelection() {
+            document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('empty-state').classList.add('hidden');
+            document.getElementById('result-container').classList.add('hidden');
+
+            parent.postMessage({
+                pluginMessage: { type: 'analyze-selection' }
+            }, '*');
+        }
+
+        function showAnalysisResult(data) {
+            document.getElementById('loading').classList.add('hidden');
+            document.getElementById('empty-state').classList.add('hidden');
+            document.getElementById('result-container').classList.remove('hidden');
+
+            currentNodeId = data.nodeId;
+            currentChanges = data.profile.recommendedChanges;
+
+            // 원본 텍스트 표시
+            document.getElementById('original-text').textContent = data.originalText;
+
+                         // 톤 프로파일 표시
+             document.getElementById('current-tone').textContent = data.profile.currentTone;
+             document.getElementById('text-length').textContent = `${data.profile.analysis.length}자`;
+             
+             const sentenceTypeMap = {
+                 'declarative': '서술문',
+                 'interrogative': '의문문',
+                 'imperative': '명령문',
+                 'exclamatory': '감탄문'
+             };
+             document.getElementById('sentence-type').textContent = sentenceTypeMap[data.profile.analysis.sentenceType];
+             
+             const emotionMap = {
+                 'neutral': '중립적',
+                 'enthusiastic': '열정적',
+                 'friendly': '친근함',
+                 'professional': '전문적',
+                 'playful': '장난스러운'
+             };
+             document.getElementById('emotion-tone').textContent = emotionMap[data.profile.analysis.emotion];
+             
+             // 감정 강도 표시
+             const emotionScore = data.profile.analysis.emotionScore || 0;
+             document.getElementById('emotion-score').textContent = emotionScore > 0 ? `${emotionScore}점` : '0점';
+             
+             // 변환 적용률 계산 및 표시
+             const totalWords = data.originalText.length;
+             const changeableWords = currentChanges.length;
+             const conversionRate = totalWords > 0 ? Math.round((changeableWords / totalWords) * 100) : 0;
+             document.getElementById('conversion-rate').textContent = `${conversionRate}%`;
+
+            // 키워드 표시
+            const keywordsContainer = document.getElementById('keywords');
+            keywordsContainer.innerHTML = '';
+            data.profile.analysis.keywords.forEach(keyword => {
+                const tag = document.createElement('span');
+                tag.className = 'keyword-tag';
+                tag.textContent = keyword;
+                keywordsContainer.appendChild(tag);
+            });
+
+            // 변경사항 표시
+            const changesContainer = document.getElementById('changes-container');
+            changesContainer.innerHTML = '';
+
+            if (currentChanges.length > 0) {
+                document.getElementById('no-changes').classList.add('hidden');
+                document.getElementById('changes-actions').classList.remove('hidden');
+
+                currentChanges.forEach((change, index) => {
+                    const changeElement = createChangeElement(change, index);
+                    changesContainer.appendChild(changeElement);
+                });
+            } else {
+                document.getElementById('no-changes').classList.remove('hidden');
+                document.getElementById('changes-actions').classList.add('hidden');
+            }
+        }
+
+        function createChangeElement(change, index) {
+            const div = document.createElement('div');
+            div.className = 'change-item';
+            
+            div.innerHTML = `
+                <div class="change-content">
+                    <input type="checkbox" class="change-checkbox" checked data-index="${index}">
+                    <div class="change-text">
+                        <span class="change-original">${change.original}</span>
+                        <span class="change-arrow">→</span>
+                        <span class="change-suggested">${change.suggested}</span>
+                    </div>
+                </div>
+                <div class="change-rule">${change.rule}</div>
+            `;
+
+            const checkbox = div.querySelector('.change-checkbox');
+            checkbox.addEventListener('change', () => {
+                div.classList.toggle('selected', checkbox.checked);
+                updateApplyButton();
+            });
+
+            div.classList.add('selected');
+            return div;
+        }
+
+        function updateApplyButton() {
+            const checkedBoxes = document.querySelectorAll('.change-checkbox:checked');
+            const applyButton = document.querySelector('#changes-actions .button');
+            applyButton.disabled = checkedBoxes.length === 0;
+        }
+
+        function applySelectedChanges() {
+            const selectedChanges = Array.from(document.querySelectorAll('.change-checkbox:checked'))
+                .map(checkbox => checkbox.dataset.index);
+
+            if (selectedChanges.length === 0) {
+                showAlert('변경할 항목을 선택해주세요.', 'error');
+                return;
+            }
+
+            parent.postMessage({
+                pluginMessage: {
+                    type: 'apply-changes',
+                    nodeId: currentNodeId,
+                    selectedChanges: selectedChanges
+                }
+            }, '*');
+        }
+
+        function applyAllChanges() {
+            const allChanges = currentChanges.map((_, index) => index.toString());
+            
+            parent.postMessage({
+                pluginMessage: {
+                    type: 'apply-changes',
+                    nodeId: currentNodeId,
+                    selectedChanges: allChanges
+                }
+            }, '*');
+        }
+
+        // ESC 키로 플러그인 닫기
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                parent.postMessage({
+                    pluginMessage: { type: 'close-plugin' }
+                }, '*');
+            }
+        });
+    </script>
+</body>
+</html>
