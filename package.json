@@ -7,8 +7,8 @@
     "build": "tsc",
     "watch": "tsc --watch",
     "dev": "tsc --watch",
-    "lint": "eslint src --ext .ts",
-    "lint:fix": "eslint src --ext .ts --fix"
+    "lint": "eslint code.ts --ext .ts",
+    "lint:fix": "eslint code.ts --ext .ts --fix"
   },
   "devDependencies": {
     "@figma/plugin-typings": "^1.75.0",

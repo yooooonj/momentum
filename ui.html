@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UX톤 적용하기</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #ffffff;
+            color: #1f2937;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        .container {
+            padding: 16px;
+            max-width: 100%;
+        }
+
+        .header {
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 4px;
+        }
+
+        .subtitle {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .card {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+            background: #ffffff;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .badge {
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .badge-emotion {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .badge-style {
+            background: #ecfdf5;
+            color: #065f46;
+        }
+
+        .tone-profile {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin: 12px 0;
+        }
+
+        .profile-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px;
+            background: #f9fafb;
+            border-radius: 6px;
+            font-size: 12px;
+        }
+
+        .profile-label {
+            font-weight: 500;
+            color: #6b7280;
+        }
+
+        .profile-value {
+            color: #111827;
+            font-weight: 600;
+        }
+
+        .keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin: 12px 0;
+        }
+
+        .keyword-tag {
+            background: #f3f4f6;
+            color: #374151;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .changes-section {
+            margin-top: 16px;
+        }
+
+        .change-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            background: #ffffff;
+        }
+
+        .change-item:hover {
+            background: #f9fafb;
+        }
+
+        .change-checkbox {
+            width: 16px;
+            height: 16px;
+            accent-color: #3b82f6;
+        }
+
+        .change-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .change-text {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .original-text {
+            background: #fef2f2;
+            color: #991b1b;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 11px;
+            text-decoration: line-through;
+        }
+
+        .arrow {
+            color: #6b7280;
+            font-size: 12px;
+        }
+
+        .suggested-text {
+            background: #f0fdf4;
+            color: #166534;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .change-description {
+            font-size: 11px;
+            color: #6b7280;
+            margin-top: 2px;
+        }
+
+        .category-badge {
+            padding: 1px 6px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 500;
+            text-transform: uppercase;
+            margin-left: auto;
+        }
+
+        .category-action {
+            background: #eff6ff;
+            color: #1d4ed8;
+        }
+
+        .category-ending {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .category-expression {
+            background: #f3e8ff;
+            color: #7c3aed;
+        }
+
+        .button {
+            width: 100%;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .button-primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .button-primary:hover {
+            background: #2563eb;
+        }
+
+        .button-secondary {
+            background: #f3f4f6;
+            color: #374151;
+            border: 1px solid #d1d5db;
+        }
+
+        .button-secondary:hover {
+            background: #e5e7eb;
+        }
+
+        .button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+            color: #6b7280;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #e5e7eb;
+            border-top: 2px solid #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 12px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6b7280;
+        }
+
+        .empty-state.hidden {
+            display: none;
+        }
+
+        .icon {
+            width: 16px;
+            height: 16px;
+            opacity: 0.7;
+        }
+
+        .select-all-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: #f8fafc;
+            border-radius: 6px;
+            margin-bottom: 12px;
+        }
+
+        .select-all-checkbox {
+            width: 16px;
+            height: 16px;
+            accent-color: #3b82f6;
+        }
+
+        .select-all-label {
+            font-size: 12px;
+            font-weight: 500;
+            color: #374151;
+            flex: 1;
+        }
+
+        .count-badge {
+            background: #3b82f6;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="title">🎨 UX톤 적용하기</div>
+            <div class="subtitle">선택된 텍스트의 톤을 친근한 UX Writing 스타일로 변환합니다</div>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <div>텍스트를 분석하고 있습니다...</div>
+        </div>
+
+        <div class="empty-state hidden" id="emptyState">
+            <div>📝</div>
+            <div style="margin-top: 8px;">분석할 텍스트가 없습니다</div>
+            <div style="font-size: 12px; margin-top: 4px;">Figma에서 텍스트 노드를 선택해주세요</div>
+        </div>
+
+        <div id="analysisResults" style="display: none;">
+            <!-- 분석 결과가 여기에 동적으로 추가됩니다 -->
+        </div>
+
+        <div class="actions" id="actionButtons" style="display: none;">
+            <button class="button button-secondary" id="refreshBtn">
+                <span>🔄</span>
+                다시 분석
+            </button>
+            <button class="button button-primary" id="applyAllBtn">
+                <span>✨</span>
+                모든 변경사항 적용
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // 전역 변수
+        let currentAnalyses = [];
+        let selectedChanges = new Set();
+
+        // DOM 요소 참조
+        const loadingEl = document.getElementById('loading');
+        const emptyStateEl = document.getElementById('emptyState');
+        const analysisResultsEl = document.getElementById('analysisResults');
+        const actionButtonsEl = document.getElementById('actionButtons');
+        const refreshBtn = document.getElementById('refreshBtn');
+        const applyAllBtn = document.getElementById('applyAllBtn');
+
+        // UI 상태 관리
+        function showLoading() {
+            loadingEl.classList.add('show');
+            emptyStateEl.classList.add('hidden');
+            analysisResultsEl.style.display = 'none';
+            actionButtonsEl.style.display = 'none';
+        }
+
+        function hideLoading() {
+            loadingEl.classList.remove('show');
+        }
+
+        function showEmptyState() {
+            hideLoading();
+            emptyStateEl.classList.remove('hidden');
+            analysisResultsEl.style.display = 'none';
+            actionButtonsEl.style.display = 'none';
+        }
+
+        function showResults() {
+            hideLoading();
+            emptyStateEl.classList.add('hidden');
+            analysisResultsEl.style.display = 'block';
+            actionButtonsEl.style.display = 'flex';
+        }
+
+        // 감정 톤 한국어 매핑
+        function getEmotionLabel(emotion) {
+            const emotionMap = {
+                'neutral': '중성적',
+                'enthusiastic': '열정적',
+                'friendly': '친근함',
+                'professional': '전문적',
+                'playful': '장난스러움'
+            };
+            return emotionMap[emotion] || emotion;
+        }
+
+        // 문장 스타일 한국어 매핑
+        function getSentenceStyleLabel(style) {
+            const styleMap = {
+                'declarative': '서술문',
+                'interrogative': '의문문',
+                'imperative': '명령문',
+                'exclamatory': '감탄문'
+            };
+            return styleMap[style] || style;
+        }
+
+        // 톤 프로파일 한국어 매핑
+        function getToneProfileLabel(key, value) {
+            const profileMap = {
+                formality: { formal: '격식적', casual: '캐주얼' },
+                friendliness: { cold: '차가움', neutral: '중성적', warm: '따뜻함' },
+                directness: { indirect: '간접적', moderate: '보통', direct: '직접적' }
+            };
+            return profileMap[key]?.[value] || value;
+        }
+
+        // 분석 결과 렌더링
+        function renderAnalysis(nodeId, analysis) {
+            const hasChanges = analysis.suggestedChanges.length > 0;
+            
+            return `
+                <div class="card" data-node-id="${nodeId}">
+                    <div class="card-header">
+                        📄 텍스트 분석 결과
+                        <span class="badge badge-emotion">${getEmotionLabel(analysis.emotion)}</span>
+                        <span class="badge badge-style">${getSentenceStyleLabel(analysis.sentenceStyle)}</span>
+                    </div>
+                    
+                    <div style="background: #f8fafc; padding: 12px; border-radius: 6px; margin-bottom: 12px; font-size: 12px; line-height: 1.4;">
+                        "${analysis.originalText}"
+                    </div>
+
+                    <div class="tone-profile">
+                        <div class="profile-item">
+                            <span class="profile-label">격식성</span>
+                            <span class="profile-value">${getToneProfileLabel('formality', analysis.toneProfile.formality)}</span>
+                        </div>
+                        <div class="profile-item">
+                            <span class="profile-label">친근함</span>
+                            <span class="profile-value">${getToneProfileLabel('friendliness', analysis.toneProfile.friendliness)}</span>
+                        </div>
+                        <div class="profile-item">
+                            <span class="profile-label">직접성</span>
+                            <span class="profile-value">${getToneProfileLabel('directness', analysis.toneProfile.directness)}</span>
+                        </div>
+                        <div class="profile-item">
+                            <span class="profile-label">키워드</span>
+                            <span class="profile-value">${analysis.keywords.length}개</span>
+                        </div>
+                    </div>
+
+                    ${analysis.keywords.length > 0 ? `
+                        <div class="keywords">
+                            ${analysis.keywords.map(keyword => `<span class="keyword-tag">${keyword}</span>`).join('')}
+                        </div>
+                    ` : ''}
+
+                    ${hasChanges ? `
+                        <div class="changes-section">
+                            <div class="card-header" style="margin-bottom: 8px;">
+                                🎯 제안된 변경사항
+                                <span class="count-badge">${analysis.suggestedChanges.length}</span>
+                            </div>
+                            
+                            <div class="select-all-container">
+                                <input type="checkbox" class="select-all-checkbox" id="selectAll-${nodeId}" 
+                                       onchange="toggleSelectAll('${nodeId}', this.checked)">
+                                <label class="select-all-label" for="selectAll-${nodeId}">모두 선택</label>
+                            </div>
+
+                            ${analysis.suggestedChanges.map((change, index) => {
+                                const changeId = `${nodeId}-${index}`;
+                                return `
+                                    <div class="change-item">
+                                        <input type="checkbox" class="change-checkbox" id="change-${changeId}" 
+                                               data-node-id="${nodeId}" data-pattern="${change.original}"
+                                               onchange="handleChangeSelection('${changeId}', this.checked)">
+                                        <div class="change-content">
+                                            <div class="change-text">
+                                                <span class="original-text">${change.original}</span>
+                                                <span class="arrow">→</span>
+                                                <span class="suggested-text">${change.suggested}</span>
+                                                <span class="category-badge category-${change.category}">${change.category}</span>
+                                            </div>
+                                            <div class="change-description">${change.description}</div>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                            
+                            <button class="button button-primary" style="margin-top: 12px;" 
+                                    onclick="applySelectedChanges('${nodeId}')">
+                                선택된 변경사항 적용
+                            </button>
+                        </div>
+                    ` : `
+                        <div style="text-align: center; padding: 20px; color: #6b7280; font-size: 12px;">
+                            ✅ 이미 친근한 UX 톤으로 작성되어 있습니다
+                        </div>
+                    `}
+                </div>
+            `;
+        }
+
+        // 전체 선택/해제 처리
+        function toggleSelectAll(nodeId, checked) {
+            const checkboxes = document.querySelectorAll(`input[data-node-id="${nodeId}"]`);
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = checked;
+                handleChangeSelection(checkbox.id.replace('change-', ''), checked);
+            });
+        }
+
+        // 개별 변경사항 선택 처리
+        function handleChangeSelection(changeId, checked) {
+            if (checked) {
+                selectedChanges.add(changeId);
+            } else {
+                selectedChanges.delete(changeId);
+            }
+            
+            // 전체 선택 체크박스 상태 업데이트
+            const nodeId = changeId.split('-')[0];
+            const nodeCheckboxes = document.querySelectorAll(`input[data-node-id="${nodeId}"]`);
+            const selectAllCheckbox = document.getElementById(`selectAll-${nodeId}`);
+            
+            if (selectAllCheckbox) {
+                const checkedCount = Array.from(nodeCheckboxes).filter(cb => cb.checked).length;
+                selectAllCheckbox.checked = checkedCount === nodeCheckboxes.length;
+                selectAllCheckbox.indeterminate = checkedCount > 0 && checkedCount < nodeCheckboxes.length;
+            }
+        }
+
+        // 선택된 변경사항 적용
+        function applySelectedChanges(nodeId) {
+            const selectedPatterns = [];
+            const checkboxes = document.querySelectorAll(`input[data-node-id="${nodeId}"]:checked`);
+            
+            checkboxes.forEach(checkbox => {
+                selectedPatterns.push(checkbox.dataset.pattern);
+            });
+
+            if (selectedPatterns.length === 0) {
+                return;
+            }
+
+            parent.postMessage({
+                pluginMessage: {
+                    type: 'apply-selected-patterns',
+                    data: { selectedPatterns, nodeId }
+                }
+            }, '*');
+        }
+
+        // 이벤트 리스너
+        refreshBtn.addEventListener('click', () => {
+            showLoading();
+            parent.postMessage({
+                pluginMessage: { type: 'analyze-text' }
+            }, '*');
+        });
+
+        applyAllBtn.addEventListener('click', () => {
+            if (confirm('모든 텍스트에 UX 톤 변환을 적용하시겠습니까?')) {
+                parent.postMessage({
+                    pluginMessage: { type: 'apply-conversion' }
+                }, '*');
+            }
+        });
+
+        // 플러그인 메시지 처리
+        window.onmessage = (event) => {
+            const { type, data } = event.data.pluginMessage || {};
+
+            switch (type) {
+                case 'initial-analysis':
+                case 'analysis-result':
+                    currentAnalyses = data;
+                    selectedChanges.clear();
+                    
+                    if (!data || data.length === 0) {
+                        showEmptyState();
+                        return;
+                    }
+
+                    const hasAnyChanges = data.some(item => item.analysis.suggestedChanges.length > 0);
+                    
+                    analysisResultsEl.innerHTML = data
+                        .map(item => renderAnalysis(item.nodeId, item.analysis))
+                        .join('');
+                    
+                    // 변경사항이 없으면 "모든 변경사항 적용" 버튼 비활성화
+                    applyAllBtn.disabled = !hasAnyChanges;
+                    applyAllBtn.textContent = hasAnyChanges ? '✨ 모든 변경사항 적용' : '✅ 변경사항 없음';
+                    
+                    showResults();
+                    break;
+            }
+        };
+
+        // 초기 로딩 상태
+        showLoading();
+    </script>
+</body>
+</html>
