@@ -69,12 +69,12 @@
             word-break: break-word;
         }
 
-        .tone-profile {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
+                 .tone-profile {
+             display: grid;
+             grid-template-columns: 1fr 1fr 1fr;
+             gap: 12px;
+             margin-bottom: 16px;
+         }
 
         .tone-item {
             background: #f8fafc;
@@ -331,6 +331,14 @@
                         <div class="tone-item-label">감정 톤</div>
                         <div id="emotion-tone" class="tone-item-value">-</div>
                     </div>
+                    <div class="tone-item">
+                        <div class="tone-item-label">감정 강도</div>
+                        <div id="emotion-score" class="tone-item-value">-</div>
+                    </div>
+                    <div class="tone-item">
+                        <div class="tone-item-label">변환 적용률</div>
+                        <div id="conversion-rate" class="tone-item-value">-</div>
+                    </div>
                 </div>
                 <div>
                     <div class="tone-item-label">주요 키워드</div>
@@ -415,25 +423,36 @@
             // 원본 텍스트 표시
             document.getElementById('original-text').textContent = data.originalText;
 
-            // 톤 프로파일 표시
-            document.getElementById('current-tone').textContent = data.profile.currentTone;
-            document.getElementById('text-length').textContent = `${data.profile.analysis.length}자`;
-            
-            const sentenceTypeMap = {
-                'declarative': '서술문',
-                'interrogative': '의문문',
-                'imperative': '명령문',
-                'exclamatory': '감탄문'
-            };
-            document.getElementById('sentence-type').textContent = sentenceTypeMap[data.profile.analysis.sentenceType];
-            
-            const emotionMap = {
-                'friendly': '친근함',
-                'professional': '전문적',
-                'formal': '격식적',
-                'casual': '캐주얼'
-            };
-            document.getElementById('emotion-tone').textContent = emotionMap[data.profile.analysis.emotion];
+                         // 톤 프로파일 표시
+             document.getElementById('current-tone').textContent = data.profile.currentTone;
+             document.getElementById('text-length').textContent = `${data.profile.analysis.length}자`;
+             
+             const sentenceTypeMap = {
+                 'declarative': '서술문',
+                 'interrogative': '의문문',
+                 'imperative': '명령문',
+                 'exclamatory': '감탄문'
+             };
+             document.getElementById('sentence-type').textContent = sentenceTypeMap[data.profile.analysis.sentenceType];
+             
+             const emotionMap = {
+                 'neutral': '중립적',
+                 'enthusiastic': '열정적',
+                 'friendly': '친근함',
+                 'professional': '전문적',
+                 'playful': '장난스러운'
+             };
+             document.getElementById('emotion-tone').textContent = emotionMap[data.profile.analysis.emotion];
+             
+             // 감정 강도 표시
+             const emotionScore = data.profile.analysis.emotionScore || 0;
+             document.getElementById('emotion-score').textContent = emotionScore > 0 ? `${emotionScore}점` : '0점';
+             
+             // 변환 적용률 계산 및 표시
+             const totalWords = data.originalText.length;
+             const changeableWords = currentChanges.length;
+             const conversionRate = totalWords > 0 ? Math.round((changeableWords / totalWords) * 100) : 0;
+             document.getElementById('conversion-rate').textContent = `${conversionRate}%`;
 
             // 키워드 표시
             const keywordsContainer = document.getElementById('keywords');
