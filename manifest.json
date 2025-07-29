@@ -1,0 +1,19 @@
+{
+  "name": "ux톤 적용하기",
+  "id": "1234567890123456789",
+  "api": "1.0.0",
+  "main": "code.js",
+  "ui": "ui.html",
+  "capabilities": [],
+  "enableProposedApi": false,
+  "enablePrivatePluginApi": false,
+  "build": "",
+  "permissions": [],
+  "networkAccess": {
+    "allowedDomains": [],
+    "reasoning": ""
+  },
+  "parameters": [],
+  "parameterOnly": false,
+  "documentAccess": "dynamic-page"
+}

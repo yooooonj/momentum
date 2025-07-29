@@ -1,0 +1,17 @@
+{
+  "name": "ux-tone-plugin",
+  "version": "1.0.0",
+  "description": "한국어 UX Writing 친근한 톤으로 텍스트를 변환하는 피그마 플러그인",
+  "main": "code.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "lint": "eslint src --ext .ts,.tsx --fix"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@figma/plugin-typings": "^1.116.0",
+    "typescript": "^5.4.5"
+  }
+}
