@@ -1,0 +1,13 @@
+{
+  "name": "ux톤 적용하기",
+  "id": "ux-tone-converter",
+  "api": "1.0.0",
+  "main": "code.js",
+  "ui": "ui.html",
+  "editorType": ["figma"],
+  "documentAccess": "dynamic-page",
+  "networkAccess": {
+    "allowedDomains": ["none"]
+  },
+  "permissions": []
+}
