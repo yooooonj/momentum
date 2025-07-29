@@ -1,0 +1,30 @@
+{
+  "name": "ux-tone-converter",
+  "version": "1.0.0",
+  "description": "Figma plugin for converting Korean text to friendly UX writing tone",
+  "main": "code.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "dev": "tsc --watch",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix"
+  },
+  "devDependencies": {
+    "@figma/plugin-typings": "^1.75.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "typescript": "^5.0.0"
+  },
+  "keywords": [
+    "figma",
+    "plugin",
+    "ux",
+    "writing",
+    "korean",
+    "tone"
+  ],
+  "author": "UX Tone Converter",
+  "license": "MIT"
+}
